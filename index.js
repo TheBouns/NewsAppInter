@@ -7,6 +7,8 @@ const cors = require("cors");
 app.use(cors());
 app.use(express.json());
 
+app.use("/news", require("./Routes/news"));
+
 const port = process.env.PORT;
 const mongoDB = process.env.MONGO_URI;
 

@@ -7,7 +7,7 @@ const NewsSchema = new mongoose.Schema({
   description: {
     type: String,
   },
-  data: {
+  date: {
     type: Date,
   },
   content: {
@@ -18,9 +18,20 @@ const NewsSchema = new mongoose.Schema({
   },
   archiveDate: {
     type: Date,
+    default: "",
   },
   archive: {
     type: Boolean,
     default: false,
   },
+  source: {
+    type: String,
+  },
+  image: {
+    type: String,
+  },
 });
+
+const News = mongoose.model("News", NewsSchema);
+
+module.exports = News;

@@ -50,7 +50,7 @@ const NewsController = {
   },
   async getAllNews(req, res) {
     try {
-      const allNews = await News.find({ archive: false });
+      const allNews = await News.find();
       res.status(200).send(allNews);
     } catch (error) {
       console.error(error);
@@ -63,6 +63,15 @@ const NewsController = {
       article.archiveDate = Date();
       article.save();
       res.status(201).send(article);
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  async deleteNew(req, res) {
+    try {
+      const article = await News.findByIdAndDelete(req.params._id);
+      article.save();
+      res.status(201).send("Article has been deleted ");
     } catch (error) {
       console.error(error);
     }

@@ -43,6 +43,7 @@ const NewsController = {
             ? "https://res.cloudinary.com/ducxt7zb3/image/upload/v1651587481/newspaper-154444_oitkjk.png"
             : req.body.image,
       });
+      newArticle.save();
       res.status(200).send({ message: "New has been created", newArticle });
     } catch (error) {
       console.error(error);
@@ -50,7 +51,7 @@ const NewsController = {
   },
   async getAllNews(req, res) {
     try {
-      const allNews = await News.find();
+      const allNews = await News.find().sort({ date: -1 });
       res.status(200).send(allNews);
     } catch (error) {
       console.error(error);

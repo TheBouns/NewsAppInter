@@ -5,6 +5,7 @@ const UserController = {
     try {
       const hash = bcrypt.hashSync(req.body.password, 12);
       const user = await User.create({ ...req.body, password: hash });
+      console.log("user has been created");
       res.status(201).send({ message: "user has been created", user });
     } catch (error) {
       console.error(error);
@@ -21,6 +22,16 @@ const UserController = {
         return res.status(400).send({ message: "user or password incorrect" });
       }
       res.status(201).send({ message: `Welcome ${user.name.toUpperCase()}` });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  async getAllUsers(req, res) {
+    try {
+      const users = await User.find({ role: "user" });
+      res
+        .status(201)
+        .send({ message: `There is ${users.length} Users in DB`, users });
     } catch (error) {
       console.error(error);
     }

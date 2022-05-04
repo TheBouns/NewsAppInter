@@ -50,11 +50,19 @@ const NewsController = {
   },
   async getAllNews(req, res) {
     try {
-      const allNews = await News.find();
-      res.status(200).send({
-        message: `There is ${allNews.length} articles in DB`,
-        allNews,
-      });
+      const allNews = await News.find({ archive: false });
+      res.status(200).send(allNews);
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  async setArchived(req, res) {
+    try {
+      const article = await News.findByIdAndUpdate(req.params._id);
+      article.archive = true;
+      article.archiveDate = Date();
+      article.save();
+      res.status(201).send(article);
     } catch (error) {
       console.error(error);
     }

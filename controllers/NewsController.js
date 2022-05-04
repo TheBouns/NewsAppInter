@@ -1,5 +1,4 @@
 const axios = require("axios");
-const { response } = require("express");
 const News = require("../Models/New");
 
 const NewsController = {
@@ -52,12 +51,10 @@ const NewsController = {
   async getAllNews(req, res) {
     try {
       const allNews = await News.find();
-      res
-        .status(200)
-        .send({
-          message: `There is ${allNews.length} articles in DB`,
-          allNews,
-        });
+      res.status(200).send({
+        message: `There is ${allNews.length} articles in DB`,
+        allNews,
+      });
     } catch (error) {
       console.error(error);
     }

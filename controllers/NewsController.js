@@ -23,7 +23,7 @@ const NewsController = {
               : item.urlToImage,
         });
       });
-      res.status(200).send("DB Has Been Created");
+      res.status(201).send("DB Has Been Created");
     } catch (error) {
       console.error(error);
     }
@@ -44,7 +44,7 @@ const NewsController = {
             : req.body.image,
       });
       newArticle.save();
-      res.status(200).send({ message: "New has been created", newArticle });
+      res.status(201).send({ message: "New has been created", newArticle });
     } catch (error) {
       console.error(error);
     }
@@ -52,10 +52,16 @@ const NewsController = {
   async getAllNews(req, res) {
     try {
       const allNews = await News.find().sort({ date: -1 });
-      res.status(200).send(allNews);
+      res.status(201).send(allNews);
     } catch (error) {
       console.error(error);
     }
+  },
+  async getAllNewsArchived(req, res) {
+    const archived = await News.find({ archive: true }).sort({
+      archiveDate: "desc",
+    });
+    res.status(201).send(archived);
   },
   async setArchived(req, res) {
     try {

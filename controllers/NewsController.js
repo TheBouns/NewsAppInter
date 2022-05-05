@@ -70,9 +70,10 @@ const NewsController = {
   },
   async deleteNew(req, res) {
     try {
-      const article = await News.findByIdAndDelete(req.params._id);
-      article.save();
-      res.status(201).send("Article has been deleted ");
+      await News.findByIdAndDelete(req.params._id);
+      res
+        .status(200)
+        .send({ message: "Article has been deleted ", _id: req.params._id });
     } catch (error) {
       console.error(error);
     }

@@ -5,7 +5,7 @@ const NewsController = {
   async dbNews(req, res) {
     try {
       const response = await axios.get(
-        "https://newsapi.org/v2/top-headlines?country=us&category=business&apiKey=90d1047f0b774295a7a011e7eb9bf129"
+        "https://newsapi.org/v2/top-headlines?country=us&pageSize=20&apiKey=90d1047f0b774295a7a011e7eb9bf129"
       );
       const data = response.data.articles;
       data.map(async (item) => {
@@ -80,6 +80,16 @@ const NewsController = {
       res
         .status(200)
         .send({ message: "Article has been deleted ", _id: req.params._id });
+    } catch (error) {
+      console.error(error);
+    }
+  },
+  async findNew(req, res) {
+    try {
+      const news = await News.find({
+        title: { $regex: req.params.title, $options: "i" },
+      });
+      res.status(200).send(news);
     } catch (error) {
       console.error(error);
     }

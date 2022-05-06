@@ -8,5 +8,6 @@ router.get("/", NewsController.getAllNews);
 router.get("/archived", NewsController.getAllNewsArchived);
 router.put("/:_id", NewsController.setArchived);
 router.delete("/delete/:_id", NewsController.deleteNew);
+router.get("/find/:title", NewsController.findNew);
 
 module.exports = router;

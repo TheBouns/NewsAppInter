@@ -30,14 +30,15 @@ const NewsController = {
   },
   async create(req, res) {
     try {
+      req.file ? (req.body.image = req.file.filename) : (req.body.image = "");
       const newArticle = await News.create({
         ...req.body,
         title: req.body.title,
         description: req.body.description,
-        date: Date(),
+        date: Date.now(),
         content: req.body.content,
         author: req.body.author === "" ? "anonimus" : req.body.author,
-        source: req.body.source,
+        source: req.body.source === "" ? "anonimus" : req.body.source,
         image:
           req.body.image === ""
             ? "https://res.cloudinary.com/ducxt7zb3/image/upload/v1651587481/newspaper-154444_oitkjk.png"

@@ -11,7 +11,10 @@ const NewsController = {
       data.map(async (item) => {
         await News.create({
           title: item.title,
-          description: item.description,
+          description:
+            item.description === null
+              ? "No description provided"
+              : item.description,
           date: Date(item.publishedAt),
           content: item.content === null ? "loreipsum" : item.content,
           author: item.author === null ? "Anonimus" : item.author,
@@ -30,7 +33,9 @@ const NewsController = {
   },
   async create(req, res) {
     try {
-      req.file ? (req.body.image = req.file.filename) : (req.body.image = "");
+      if (!req.file) {
+        req.body.image = "";
+      }
       const newArticle = await News.create({
         ...req.body,
         title: req.body.title,
@@ -42,7 +47,7 @@ const NewsController = {
         image:
           req.body.image === ""
             ? "https://res.cloudinary.com/ducxt7zb3/image/upload/v1651587481/newspaper-154444_oitkjk.png"
-            : req.body.image,
+            : "http://localhost:3005/images/" + req.file.filename,
       });
       newArticle.save();
       res.status(201).send({ message: "New has been created", newArticle });

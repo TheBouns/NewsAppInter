@@ -8,6 +8,7 @@ app.use(cors());
 app.use(express.json());
 
 app.use("/news", require("./Routes/news"));
+app.use("/images", express.static("images"));
 
 const port = process.env.PORT;
 const mongoDB = process.env.MONGO_URI;
